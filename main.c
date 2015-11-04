@@ -17,23 +17,35 @@ int main(int argc, char **argv) {
 		return 0;
 	}
 
-	unsigned int tampag = argv[1]; //tamanho da página;
-	unsigned int memfisica = argv[2]; //tamanho da memória fisica
-	unsigned int memlogica = argv[3]; //tamanho da memória lógica
+	unsigned int tampag = atoi(argv[1]); //tamanho da página;
+	unsigned int memfisica = atoi(argv[2]); //tamanho da memória fisica
+	unsigned int memlogica = atoi(argv[3]); //tamanho da memória lógica
 	int numeroendereco = 0, faltapagina = 0,i = 0;
 	float taxa = 0.0;
 	unsigned int qtdPagFisica = ((memfisica*1000)/tampag), qtdPagLogica = ((memlogica*1000)/tampag);
-	int *enderecos,*vetorFisico,vetorLogico;
+	unsigned int *enderecos,*vetorFisico,*vetorLogico;
 
-	vetorLogico = (int*) malloc(sizeof(int)*qtdPagLogica)
+	vetorLogico = (int*) malloc(sizeof(unsigned int)*qtdPagLogica);
+	vetorFisico = (int*) malloc(sizeof(int)*qtdPagFisica);
+
 
 	FILE *file;
 	file = fopen("ps1.in", "r");
 
-	fscanf (file, "%d", &enderecos[i]);
+	while (!feof(file))  {
+		fscanf (file, "%d", &i);
+	  numeroendereco++;
+	}
+	printf("qtd end %d\n",numeroendereco);
+
+	rewind(file);
+
+	enderecos = (int*) malloc(sizeof(int)*numeroendereco);
+	numeroendereco = 0;
+	fscanf (file, "%d", enderecos[numeroendereco]);
 	while (!feof (file))  {
-	  printf ("%d \n", enderecos[i]);
-	  fscanf (file, "%d", &enderecos[i]);
+	  printf ("%d \n", enderecos[numeroendereco]);
+	  fscanf (file, "%d", &enderecos[numeroendereco]);
 	  numeroendereco++;
 	}
 	fclose(file);
@@ -41,6 +53,6 @@ int main(int argc, char **argv) {
 	//while (enderecos[i] > 0) {	}
 
 
-	printf("%lu enderecos lidos, %lu faltas de pagina (taxa=%.1f%%)\n",numeroendereco,faltapagina,taxa);
+	//printf("%lu enderecos lidos, %lu faltas de pagina (taxa=%.1f%%)\n",numeroendereco,faltapagina,taxa);
 	return EXIT_SUCCESS;
 }
