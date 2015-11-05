@@ -14,6 +14,7 @@
 struct memfisica{
 	int posicaoNaMemoriaFisica;
 	int numeroDaPagina;
+	int qtdJaAlocadaNaPagina;
 	int flag;
 };
 
@@ -40,6 +41,7 @@ int main(int argc, char **argv) {
 	for (i = 0; i < qtdPagFisica; ++i) {
 		vetMemfisica[i].flag = 0;
 		vetMemfisica[i].posicaoNaMemoriaFisica = 0;
+		vetMemfisica[i].qtdJaAlocadaNaPagina = 0;
 	}
 
 	FILE *file;
@@ -58,7 +60,7 @@ int main(int argc, char **argv) {
 	while (!feof(file)) {
 		printf("%d \n", enderecos[numeroendereco]);
 		numeroDaPagLogica = enderecos[numeroendereco] / tampag;
-		printf("Numero da pagina logica = %d\n", numeroDaPagLogica);
+		//printf("Numero da pagina logica = %d\n", numeroDaPagLogica);
 		for (j = 0; j < qtdPagFisica; ++j) {
 			/*for (i = 0; i < qtdPagFisica; ++i) {
 				//printf("vetor fisico:%d\n", vetorFisico[i]);
@@ -66,17 +68,18 @@ int main(int argc, char **argv) {
 
 				}
 			}*/
+			if ((numeroDaPagLogica == vetMemfisica[j].numeroDaPagina) && (vetMemfisica[j].flag == 1)) {
+				printf("mem Fisica %d \n", (enderecos[numeroendereco]-(vetMemfisica[j].numeroDaPagina*1024))+(vetMemfisica[j].posicaoNaMemoriaFisica*1024));
+
+			}
+
 			if (vetMemfisica[j].flag == 0) {
 				faltapagina++;
 				vetMemfisica[j].numeroDaPagina = enderecos[numeroendereco]/tampag;
-				printf("Posição na mem Fisica %d valor de j:%d\n",vetMemfisica[j].posicaoNaMemoriaFisica+1,j);
+				//printf("Posição na mem Fisica %d valor de j:%d\n",vetMemfisica[j].posicaoNaMemoriaFisica+1,j);
 				printf("mem Fisica %d \n", (enderecos[numeroendereco]-(vetMemfisica[j].numeroDaPagina*1024))+(vetMemfisica[j].posicaoNaMemoriaFisica*1024));
 				vetMemfisica[j+1].posicaoNaMemoriaFisica = vetMemfisica[j].posicaoNaMemoriaFisica + 1;
-				/*while (vetMemfisica[j].flag == 0) {
-					j++;
-				}
-
-				if (j > qtdPagFisica) {
+				/*if (j > qtdPagFisica) {
 					Aqui entra o MRU
 					j = 0;
 				}*/
