@@ -31,6 +31,7 @@ int main(int argc, char **argv) {
 			((memfisica * 1000) / tampag);
 	int *enderecos, *MRU, indexMRU = 0;
 	struct memfisica *vetMemfisica = NULL;
+	int t;
 
 	vetMemfisica = (struct memfisica*) malloc(
 			sizeof(struct memfisica) * qtdPagFisica);
@@ -80,19 +81,25 @@ int main(int argc, char **argv) {
 					//já é a ultima
 				} else {
 					//atualizar a posição
+					printf("++k:%d++%d e %d index:%d\n",k,MRU[k],vetMemfisica[j].numeroDaPagina,indexMRU);
 					while (MRU[k] != vetMemfisica[j].numeroDaPagina) {
 						k++;
 					}
-					while (k != vetMemfisica[j].numeroDaPagina) {
+					while (k != qtdPagFisica-1) {
 						MRU[k] = vetMemfisica[k + 1].numeroDaPagina;
 						k++;
+						printf("loop");
 					}
-					MRU[indexMRU] = indexMRU;
-					printf("++%d++\n",MRU[indexMRU]);
+					MRU[indexMRU-1] = vetMemfisica[j].numeroDaPagina;
+
 				}
+
 				k = 0;
 				break;
 			}
+			for (t = 0; t < 3; ++t) {
+								printf("==%d==\n",MRU[t]);
+							}
 
 			if (vetMemfisica[j].flag == 0) {
 				//MRU[faltapagina] = enderecos[numeroendereco] / tampag;
@@ -118,7 +125,7 @@ int main(int argc, char **argv) {
 				faltapagina++;
 				//printf("MRU:%d e: %d--\n", MRU[indexMRU],enderecos[numeroendereco] / tampag);
 
-				int valorMRU = MRU[indexMRU];
+				int valorMRU = MRU[0];
 				printf("**%d**Pag:%d\n",valorMRU,enderecos[numeroendereco]/ tampag);
 				vetMemfisica[valorMRU].numeroDaPagina = enderecos[numeroendereco]
 						/ tampag;
